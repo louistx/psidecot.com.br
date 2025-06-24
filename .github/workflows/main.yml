@@ -1,21 +1,22 @@
 name: Push To Main 
 on: 
-    push:
-      branches:
-        - main  # or your branch name
+  push:
+    branches:
+      - main  # or your branch name
 jobs:
   run-node:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
       
-      - name: Build
+      - name: Build & Restart
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
       - run: cd /home/server/actions-runner/_work/psidecot.com.br/psidecot.com.br
       - run: npm ci
       - run: npm run build
-              
+      - run: pm2 restart psidecot || pm2 start npm --name "psidecot" -- start
+      
