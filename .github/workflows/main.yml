@@ -17,5 +17,5 @@ jobs:
           node-version: 18
       - run: cd /home/server/actions-runner/_work/psidecot.com.br/psidecot.com.br
       - run: npm ci
-      - run: npm build
+      - run: npm run build
               
