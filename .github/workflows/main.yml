@@ -1,0 +1,23 @@
+name: Push To Main 
+on: 
+    push:
+      branches:
+        - main  # or your branch name
+jobs:
+  run-node:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: /home/server
+      
+      - name: Build
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - run: cd /home/server/psidecot.com.br
+      - run: npm ci
+      - run: npm build
+              
