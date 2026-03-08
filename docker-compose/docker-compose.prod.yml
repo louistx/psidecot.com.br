@@ -1,0 +1,32 @@
+# Overrides de produção — usar com:
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+#
+# Portas ficam bound em 127.0.0.1 (só o nginx do host acessa, não a internet)
+services:
+  psidecot.admin:
+    ports:
+      - "127.0.0.1:5173:80"
+    restart: unless-stopped
+
+  psidecot.api:
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Default: "Host=db;Port=5432;Database=psidecot;Username=psidecot;Password=${DB_PASSWORD};Search Path=psidecot"
+      Jwt__Key: "${JWT_KEY}"
+      Jwt__Issuer: "psidecot-api"
+      Jwt__Audience: "psidecot-web"
+      # Em produção usa o proxy nginx do admin — origin é admin.psidecot.com.br
+      Cors__Origins__0: "https://admin.psidecot.com.br"
+    restart: unless-stopped
+
+  psidecot.website:
+    ports:
+      - "127.0.0.1:3000:3000"
+    restart: unless-stopped
+
+  db:
+    # Não expor o banco para fora do docker em produção
+    restart: unless-stopped

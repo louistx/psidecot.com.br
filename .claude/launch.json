@@ -1,0 +1,31 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "admin",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["node_modules/vite/bin/vite.js"],
+      "port": 58954,
+      "cwd": "src/PsiDecot.Admin"
+    },
+    {
+      "name": "api",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": ["run", "--project", "src/PsiDecot.Api"],
+      "port": 5172
+    },
+    {
+      "name": "website",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 3000,
+      "cwd": "src/PsiDecot.Website"
+    },
+    {
+      "name": "compose",
+      "runtimeExecutable": "docker",
+      "runtimeArgs": ["compose", "-f", "docker-compose/docker-compose.yml", "-f", "docker-compose/docker-compose.override.yml", "up", "--build"],
+      "port": 5173
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+C:\coxas\PsiDecot\PsiDecot.Admin\obj\Debug\PsiDecot.Admin.esproj.CoreCompileInputs.cache
+C:\coxas\PsiDecot\src\PsiDecot.Admin\obj\Debug\PsiDecot.Admin.esproj.CoreCompileInputs.cache

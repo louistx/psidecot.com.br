@@ -1,0 +1,12 @@
+services:
+  psidecot.admin:
+    ports:
+      - "5173:80"
+
+  psidecot.api:
+    ports:
+      - "8080:8080"
+
+  psidecot.website:
+    ports:
+      - "3000:3000"

@@ -1,0 +1,52 @@
+services:
+  psidecot.admin:
+    image: ${DOCKER_REGISTRY-}psidecotadmin
+    build:
+      context: ../src/PsiDecot.Admin
+      dockerfile: Dockerfile
+    depends_on:
+      - psidecot.api
+
+  psidecot.api:
+    image: ${DOCKER_REGISTRY-}psidecotapi
+    build:
+      context: ../src
+      dockerfile: PsiDecot.Api/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Default: "Host=db;Port=5432;Database=psidecot;Username=psidecot;Password=${DB_PASSWORD:-Dev123!};Search Path=psidecot"
+      Jwt__Key: "${JWT_KEY:-super-secret-dev-key-that-is-long-enough-32chars!}"
+      Jwt__Issuer: "psidecot-api"
+      Jwt__Audience: "psidecot-web"
+      Cors__Origins__0: "http://192.168.100.11:5173"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  psidecot.website:
+    image: ${DOCKER_REGISTRY-}psidecotwebsite
+    build:
+      context: ../src/PsiDecot.Website
+      dockerfile: Dockerfile
+    depends_on:
+      - psidecot.api
+
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: psidecot
+      POSTGRES_USER: psidecot
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-Dev123!}
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U psidecot -d psidecot"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

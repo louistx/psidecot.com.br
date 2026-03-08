@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+@import "tailwindcss";
+
+/* ── Typography (static — no runtime override needed) ────────────────────── */
+@theme {
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans:  'DM Sans', sans-serif;
+}
+
+/* ── Color tokens (CSS vars at runtime → themeable via [data-theme]) ─────── */
+@theme {
+  /* Surfaces */
+  --color-bg:        #0f1219;
+  --color-card:      #141822;
+  --color-card-alt:  #1a2035;
+  --color-input-bg:  #161b27;
+  /* Borders */
+  --color-border:    #252d42;
+  /* Text */
+  --color-fg:        #ffffff;
+  --color-muted:     #8b93ab;
+  --color-subtle:    #3a4460;
+  /* Accent */
+  --color-accent:       #7eb8a4;
+  --color-accent-hover: #8fcfba;
+  /* Supporting palette */
+  --color-gold:   #c9a87c;
+  --color-purple: #9b8ec4;
+  --color-error:  #e07b7b;
+  --color-info:   #6bb5d9;
+  --color-blush:  #d4a0c0;
+}
+
+/* ── Default Light ────────────────────────────────────────────────────────── */
+[data-theme="default-light"] {
+  --color-bg:           #f5f7fa;
+  --color-card:         #ffffff;
+  --color-card-alt:     #eef1f7;
+  --color-input-bg:     #f8f9fc;
+  --color-border:       #dde2ef;
+  --color-fg:           #1a1f35;
+  --color-muted:        #5a6280;
+  --color-subtle:       #9ba3be;
+  --color-accent:       #5a9e8a;
+  --color-accent-hover: #4a8a77;
+  --color-gold:         #b8914a;
+  --color-purple:       #7a6eb4;
+  --color-error:        #cc5555;
+  --color-info:         #4a9fc8;
+  --color-blush:        #b87a9a;
+}
+
+/* ── Decot Dark ───────────────────────────────────────────────────────────── */
+[data-theme="decot-dark"] {
+  --color-bg:           #2e2e33;
+  --color-card:         #38383e;
+  --color-card-alt:     #3f3f46;
+  --color-input-bg:     #2a2a30;
+  --color-border:       #52525c;
+  --color-fg:           #f5f0f0;
+  --color-muted:        #b0a8ae;
+  --color-subtle:       #706878;
+  --color-accent:       #f7c9cf;
+  --color-accent-hover: #f9d5da;
+  --color-gold:         #6fa3c1;
+  --color-purple:       #c5a8d0;
+  --color-error:        #e07b7b;
+  --color-info:         #6fa3c1;
+  --color-blush:        #f7c9cf;
+}
+
+/* ── Decot Light ──────────────────────────────────────────────────────────── */
+[data-theme="decot-light"] {
+  --color-bg:           #f9f5f0;
+  --color-card:         #ffffff;
+  --color-card-alt:     #f3ede8;
+  --color-input-bg:     #f7f2ed;
+  --color-border:       #e5dcd8;
+  --color-fg:           #3a2e34;
+  --color-muted:        #7a6a72;
+  --color-subtle:       #b0a0a8;
+  --color-accent:       #c97a84;
+  --color-accent-hover: #b86870;
+  --color-gold:         #5a8aaa;
+  --color-purple:       #9a7ab0;
+  --color-error:        #cc5555;
+  --color-info:         #5a8aaa;
+  --color-blush:        #c97a84;
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+/* Em @layer base para não sobrescrever @layer utilities (pl-*, px-*, etc.) */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-subtle); }
+
+/* ── Animations ───────────────────────────────────────────────────────────── */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes morph {
+  0%,100% { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; }
+  33%     { border-radius: 40% 60% 45% 55% / 60% 40% 60% 40%; }
+  66%     { border-radius: 55% 45% 60% 40% / 40% 55% 45% 60%; }
+}
+
+@keyframes floatBlob {
+  0%,100% { transform: translateY(0) scale(1); }
+  50%     { transform: translateY(-24px) scale(1.04); }
+}
+
+/* ── Blob classes ─────────────────────────────────────────────────────────── */
+.blob-1 {
+  animation: morph 12s ease-in-out infinite, floatBlob 18s ease-in-out infinite;
+}
+.blob-2 {
+  animation: morph 9s ease-in-out infinite reverse, floatBlob 22s ease-in-out infinite reverse;
+}
+
+/* ── Input / date picker ──────────────────────────────────────────────────── */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.5);
+  cursor: pointer;
+}
+
+select option {
+  background-color: var(--color-input-bg);
+  color: var(--color-fg);
+}
+
+/* ── Focus ring utility ───────────────────────────────────────────────────── */
+.focus-ring {
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.focus-ring:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 14%, transparent);
+}
+
+/* ── Card hover utility ───────────────────────────────────────────────────── */
+.card-hover {
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+}
+.card-hover:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
+  box-shadow: 0 4px 24px color-mix(in srgb, var(--color-accent) 7%, transparent);
+}
+
+/* ── Skeleton ─────────────────────────────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(90deg,
+    var(--color-card) 25%,
+    var(--color-border) 50%,
+    var(--color-card) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.8s infinite;
+  border-radius: 6px;
+}
+
+/* ── Page transitions ─────────────────────────────────────────────────────── */
+.page-enter {
+  animation: fadeIn 0.3s ease-out;
+}

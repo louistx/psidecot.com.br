@@ -1,0 +1,10 @@
+<Solution>
+  <Project Path="docker-compose/docker-compose.dcproj">
+    <Build />
+  </Project>
+  <Project Path="src/PsiDecot.Admin/PsiDecot.Admin.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="src/PsiDecot.Api/PsiDecot.Api.csproj" />
+</Solution>
